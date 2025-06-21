@@ -1,0 +1,154 @@
+{
+  "services": [
+    {
+      "correct": "Amazon Q Developer",
+      "description": "AI搭載の開発者向けアシスタント",
+      "category": "AI/ML"
+    },
+    {
+      "correct": "Amazon Q Business",
+      "description": "ビジネス向けAIアシスタント",
+      "category": "AI/ML"
+    },
+    {
+      "correct": "Amazon EC2",
+      "description": "Elastic Compute Cloud - 仮想サーバー",
+      "category": "Compute"
+    },
+    {
+      "correct": "Amazon S3",
+      "description": "Simple Storage Service - オブジェクトストレージ",
+      "category": "Storage"
+    },
+    {
+      "correct": "AWS Lambda",
+      "description": "サーバーレスコンピューティング",
+      "category": "Compute"
+    },
+    {
+      "correct": "Amazon RDS",
+      "description": "Relational Database Service",
+      "category": "Database"
+    },
+    {
+      "correct": "Amazon CloudFront",
+      "description": "コンテンツ配信ネットワーク (CDN)",
+      "category": "Networking"
+    },
+    {
+      "correct": "AWS CloudFormation",
+      "description": "Infrastructure as Code サービス",
+      "category": "Management"
+    },
+    {
+      "correct": "Amazon VPC",
+      "description": "Virtual Private Cloud",
+      "category": "Networking"
+    },
+    {
+      "correct": "Amazon DynamoDB",
+      "description": "NoSQLデータベース",
+      "category": "Database"
+    },
+    {
+      "correct": "AWS IAM",
+      "description": "Identity and Access Management",
+      "category": "Security"
+    },
+    {
+      "correct": "Amazon SQS",
+      "description": "Simple Queue Service",
+      "category": "Application Integration"
+    },
+    {
+      "correct": "Amazon SNS",
+      "description": "Simple Notification Service",
+      "category": "Application Integration"
+    },
+    {
+      "correct": "AWS CodeCommit",
+      "description": "マネージドGitリポジトリ",
+      "category": "Developer Tools"
+    },
+    {
+      "correct": "Amazon ECS",
+      "description": "Elastic Container Service",
+      "category": "Containers"
+    },
+    {
+      "correct": "Amazon EKS",
+      "description": "Elastic Kubernetes Service",
+      "category": "Containers"
+    },
+    {
+      "correct": "AWS Fargate",
+      "description": "サーバーレスコンテナ",
+      "category": "Containers"
+    },
+    {
+      "correct": "Amazon CloudWatch",
+      "description": "モニタリングとログ管理",
+      "category": "Management"
+    },
+    {
+      "correct": "AWS CloudTrail",
+      "description": "APIコール監査ログ",
+      "category": "Security"
+    },
+    {
+      "correct": "Amazon Route 53",
+      "description": "DNSウェブサービス",
+      "category": "Networking"
+    },
+    {
+      "correct": "AWS Elastic Beanstalk",
+      "description": "アプリケーションデプロイメント",
+      "category": "Compute"
+    },
+    {
+      "correct": "Amazon ElastiCache",
+      "description": "インメモリキャッシュ",
+      "category": "Database"
+    },
+    {
+      "correct": "Amazon Redshift",
+      "description": "データウェアハウス",
+      "category": "Analytics"
+    },
+    {
+      "correct": "AWS Glue",
+      "description": "ETLサービス",
+      "category": "Analytics"
+    },
+    {
+      "correct": "Amazon Kinesis",
+      "description": "リアルタイムデータストリーミング",
+      "category": "Analytics"
+    },
+    {
+      "correct": "AWS Step Functions",
+      "description": "サーバーレスワークフロー",
+      "category": "Application Integration"
+    },
+    {
+      "correct": "Amazon API Gateway",
+      "description": "APIの作成・管理・デプロイ",
+      "category": "Networking"
+    },
+    {
+      "correct": "AWS Secrets Manager",
+      "description": "シークレット管理",
+      "category": "Security"
+    },
+    {
+      "correct": "AWS Systems Manager",
+      "description": "運用データの一元管理",
+      "category": "Management"
+    },
+    {
+      "correct": "Amazon Cognito",
+      "description": "ユーザー認証・認可",
+      "category": "Security"
+    }
+  ]
+}
