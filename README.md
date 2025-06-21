@@ -71,6 +71,9 @@ python3 aws_service_quiz.py
 python3 aws_quiz_advanced.py
 ```
 
+### GitHub Pages の公開環境でも遊べます
+https://misakiotb.github.io/q_game_AWS_GUNSLINGER/
+
 ## 🎮 ゲームの流れ
 
 1. **スタート画面**: 「決闘開始！」ボタンでゲーム開始
