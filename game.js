@@ -1,4 +1,4 @@
-// AWS Gunslinger Quiz - ゲームロジック
+// AWS Gunslinger Quiz - ゲームロジック（多言語対応）
 
 class AWSGunslingerQuiz {
     constructor() {
@@ -8,8 +8,10 @@ class AWSGunslingerQuiz {
         this.wrongAnswers = [];
         this.gameQuestions = [];
         this.totalQuestions = 10;
+        this.currentLanguage = 'ja';
         
         this.initializeElements();
+        this.loadTranslations();
         this.loadServices();
         this.setupEventListeners();
         this.setupCrosshair();
@@ -45,159 +47,453 @@ class AWSGunslingerQuiz {
         
         // 復習要素
         this.wrongAnswersEl = document.getElementById('wrong-answers');
+        
+        // 言語選択
+        this.languageSelect = document.getElementById('language-select');
+    }
+
+    loadTranslations() {
+        this.translations = {
+            ja: {
+                subtitle: "Service Name Showdown",
+                description: "西部の荒野で繰り広げられるAWSサービス名の決闘！<br>正しいサービス名を撃ち抜け、ガンスリンガー！",
+                selectLanguage: "言語を選択:",
+                startButton: "🔫 決闘開始！",
+                questionCounter: "問題",
+                score: "的中:",
+                gameOver: "決闘終了！",
+                accuracy: "的中率:",
+                yourTitle: "あなたの称号",
+                backToTitle: "🏠 タイトル画面へ",
+                reviewMistakes: "📝 間違いを確認",
+                missedTargets: "🎯 撃ち損じた標的",
+                backToResult: "🔙 結果に戻る",
+                correctAnswer: "正解:",
+                yourAnswer: "あなたの回答:",
+                perfectShot: "完璧な射撃でした！間違いはありません。",
+                hitFeedback: "🎯 見事な射撃だ！",
+                missFeedback: "💥 外れだ！正解はこっちだった...",
+                ranks: {
+                    legendary: "🤠 伝説のガンスリンガー",
+                    expert: "🎯 熟練ガンスリンガー",
+                    rookie: "🔫 駆け出しガンマン",
+                    apprentice: "🤔 見習いカウボーイ",
+                    stable: "🐎 馬の世話係"
+                },
+                rankComments: {
+                    legendary: "完璧な射撃だ！君は真の西部の英雄だ！",
+                    expert: "なかなかの腕前だ、相棒！",
+                    rookie: "まずまずの腕前だが、まだまだ修行が必要だ。",
+                    apprentice: "射撃の練習を続けよう、パートナー。",
+                    stable: "銃よりも馬の世話の方が向いているかもしれない..."
+                }
+            },
+            en: {
+                subtitle: "Service Name Showdown",
+                description: "AWS service name duel in the wild west!<br>Shoot the correct service name, gunslinger!",
+                selectLanguage: "Select Language:",
+                startButton: "🔫 Start Duel!",
+                questionCounter: "Question",
+                score: "Hits:",
+                gameOver: "Duel Over!",
+                accuracy: "Accuracy:",
+                yourTitle: "Your Title",
+                backToTitle: "🏠 Back to Title",
+                reviewMistakes: "📝 Review Mistakes",
+                missedTargets: "🎯 Missed Targets",
+                backToResult: "🔙 Back to Results",
+                correctAnswer: "Correct:",
+                yourAnswer: "Your Answer:",
+                perfectShot: "Perfect shooting! No mistakes.",
+                hitFeedback: "🎯 Great shot!",
+                missFeedback: "💥 Miss! The correct answer was over there...",
+                ranks: {
+                    legendary: "🤠 Legendary Gunslinger",
+                    expert: "🎯 Expert Gunslinger",
+                    rookie: "🔫 Rookie Gunman",
+                    apprentice: "🤔 Apprentice Cowboy",
+                    stable: "🐎 Stable Hand"
+                },
+                rankComments: {
+                    legendary: "Perfect shooting! You are a true western hero!",
+                    expert: "Nice shooting, partner!",
+                    rookie: "Decent shooting, but more practice needed.",
+                    apprentice: "Keep practicing your shooting, partner.",
+                    stable: "Maybe taking care of horses suits you better..."
+                }
+            },
+            zh: {
+                subtitle: "服务名称对决",
+                description: "西部荒野中的AWS服务名称决斗！<br>射中正确的服务名称，枪手！",
+                selectLanguage: "选择语言:",
+                startButton: "🔫 开始决斗！",
+                questionCounter: "问题",
+                score: "命中:",
+                gameOver: "决斗结束！",
+                accuracy: "命中率:",
+                yourTitle: "你的称号",
+                backToTitle: "🏠 返回标题",
+                reviewMistakes: "📝 查看错误",
+                missedTargets: "🎯 未命中目标",
+                backToResult: "🔙 返回结果",
+                correctAnswer: "正确答案:",
+                yourAnswer: "你的答案:",
+                perfectShot: "完美射击！没有错误。",
+                hitFeedback: "🎯 好枪法！",
+                missFeedback: "💥 没中！正确答案在那边...",
+                ranks: {
+                    legendary: "🤠 传奇枪手",
+                    expert: "🎯 专家枪手",
+                    rookie: "🔫 新手枪手",
+                    apprentice: "🤔 学徒牛仔",
+                    stable: "🐎 马夫"
+                },
+                rankComments: {
+                    legendary: "完美的射击！你是真正的西部英雄！",
+                    expert: "不错的枪法，伙伴！",
+                    rookie: "还不错，但还需要更多练习。",
+                    apprentice: "继续练习射击，伙伴。",
+                    stable: "也许照顾马匹更适合你..."
+                }
+            },
+            ko: {
+                subtitle: "서비스 이름 대결",
+                description: "서부 황야에서 펼쳐지는 AWS 서비스 이름 결투!<br>정확한 서비스 이름을 쏴라, 건슬링거!",
+                selectLanguage: "언어 선택:",
+                startButton: "🔫 결투 시작!",
+                questionCounter: "문제",
+                score: "명중:",
+                gameOver: "결투 종료!",
+                accuracy: "명중률:",
+                yourTitle: "당신의 칭호",
+                backToTitle: "🏠 타이틀로 돌아가기",
+                reviewMistakes: "📝 실수 확인",
+                missedTargets: "🎯 놓친 표적",
+                backToResult: "🔙 결과로 돌아가기",
+                correctAnswer: "정답:",
+                yourAnswer: "당신의 답:",
+                perfectShot: "완벽한 사격! 실수가 없습니다.",
+                hitFeedback: "🎯 훌륭한 사격!",
+                missFeedback: "💥 빗나갔다! 정답은 저쪽이었어...",
+                ranks: {
+                    legendary: "🤠 전설의 건슬링거",
+                    expert: "🎯 숙련된 건슬링거",
+                    rookie: "🔫 초보 건맨",
+                    apprentice: "🤔 견습 카우보이",
+                    stable: "🐎 마구간지기"
+                },
+                rankComments: {
+                    legendary: "완벽한 사격! 당신은 진정한 서부의 영웅입니다!",
+                    expert: "좋은 실력이군, 파트너!",
+                    rookie: "괜찮은 실력이지만 더 연습이 필요해.",
+                    apprentice: "계속 사격 연습을 하자, 파트너.",
+                    stable: "총보다는 말 돌보는 게 더 맞을지도..."
+                }
+            }
+        };
     }
 
     loadServices() {
-        // AWSサービスデータ
+        // AWSサービスデータ（多言語対応）
         this.services = [
             {
                 correct: "Amazon Q Developer",
-                description: "AI搭載の開発者向けアシスタント",
+                descriptions: {
+                    ja: "AI搭載の開発者向けアシスタント",
+                    en: "AI-powered developer assistant",
+                    zh: "AI驱动的开发者助手",
+                    ko: "AI 기반 개발자 어시스턴트"
+                },
                 category: "AI/ML"
             },
             {
                 correct: "Amazon Q Business",
-                description: "ビジネス向けAIアシスタント",
+                descriptions: {
+                    ja: "ビジネス向けAIアシスタント",
+                    en: "AI assistant for business",
+                    zh: "商业AI助手",
+                    ko: "비즈니스용 AI 어시스턴트"
+                },
                 category: "AI/ML"
             },
             {
                 correct: "Amazon EC2",
-                description: "Elastic Compute Cloud - 仮想サーバー",
+                descriptions: {
+                    ja: "Elastic Compute Cloud - 仮想サーバー",
+                    en: "Elastic Compute Cloud - Virtual servers",
+                    zh: "弹性计算云 - 虚拟服务器",
+                    ko: "탄력적 컴퓨팅 클라우드 - 가상 서버"
+                },
                 category: "Compute"
             },
             {
                 correct: "Amazon S3",
-                description: "Simple Storage Service - オブジェクトストレージ",
+                descriptions: {
+                    ja: "Simple Storage Service - オブジェクトストレージ",
+                    en: "Simple Storage Service - Object storage",
+                    zh: "简单存储服务 - 对象存储",
+                    ko: "단순 스토리지 서비스 - 객체 스토리지"
+                },
                 category: "Storage"
             },
             {
                 correct: "AWS Lambda",
-                description: "サーバーレスコンピューティング",
+                descriptions: {
+                    ja: "サーバーレスコンピューティング",
+                    en: "Serverless computing",
+                    zh: "无服务器计算",
+                    ko: "서버리스 컴퓨팅"
+                },
                 category: "Compute"
             },
             {
                 correct: "Amazon RDS",
-                description: "Relational Database Service",
+                descriptions: {
+                    ja: "Relational Database Service",
+                    en: "Relational Database Service",
+                    zh: "关系数据库服务",
+                    ko: "관계형 데이터베이스 서비스"
+                },
                 category: "Database"
             },
             {
                 correct: "Amazon CloudFront",
-                description: "コンテンツ配信ネットワーク (CDN)",
+                descriptions: {
+                    ja: "コンテンツ配信ネットワーク (CDN)",
+                    en: "Content Delivery Network (CDN)",
+                    zh: "内容分发网络 (CDN)",
+                    ko: "콘텐츠 전송 네트워크 (CDN)"
+                },
                 category: "Networking"
             },
             {
                 correct: "AWS CloudFormation",
-                description: "Infrastructure as Code サービス",
+                descriptions: {
+                    ja: "Infrastructure as Code サービス",
+                    en: "Infrastructure as Code service",
+                    zh: "基础设施即代码服务",
+                    ko: "코드형 인프라 서비스"
+                },
                 category: "Management"
             },
             {
                 correct: "Amazon VPC",
-                description: "Virtual Private Cloud",
+                descriptions: {
+                    ja: "Virtual Private Cloud",
+                    en: "Virtual Private Cloud",
+                    zh: "虚拟私有云",
+                    ko: "가상 프라이빗 클라우드"
+                },
                 category: "Networking"
             },
             {
                 correct: "Amazon DynamoDB",
-                description: "NoSQLデータベース",
+                descriptions: {
+                    ja: "NoSQLデータベース",
+                    en: "NoSQL database",
+                    zh: "NoSQL数据库",
+                    ko: "NoSQL 데이터베이스"
+                },
                 category: "Database"
             },
             {
                 correct: "AWS IAM",
-                description: "Identity and Access Management",
+                descriptions: {
+                    ja: "Identity and Access Management",
+                    en: "Identity and Access Management",
+                    zh: "身份和访问管理",
+                    ko: "자격 증명 및 액세스 관리"
+                },
                 category: "Security"
             },
             {
                 correct: "Amazon SQS",
-                description: "Simple Queue Service",
+                descriptions: {
+                    ja: "Simple Queue Service",
+                    en: "Simple Queue Service",
+                    zh: "简单队列服务",
+                    ko: "단순 대기열 서비스"
+                },
                 category: "Application Integration"
             },
             {
                 correct: "Amazon SNS",
-                description: "Simple Notification Service",
+                descriptions: {
+                    ja: "Simple Notification Service",
+                    en: "Simple Notification Service",
+                    zh: "简单通知服务",
+                    ko: "단순 알림 서비스"
+                },
                 category: "Application Integration"
             },
             {
                 correct: "AWS CodeCommit",
-                description: "マネージドGitリポジトリ",
+                descriptions: {
+                    ja: "マネージドGitリポジトリ",
+                    en: "Managed Git repository",
+                    zh: "托管Git存储库",
+                    ko: "관리형 Git 리포지토리"
+                },
                 category: "Developer Tools"
             },
             {
                 correct: "Amazon ECS",
-                description: "Elastic Container Service",
+                descriptions: {
+                    ja: "Elastic Container Service",
+                    en: "Elastic Container Service",
+                    zh: "弹性容器服务",
+                    ko: "탄력적 컨테이너 서비스"
+                },
                 category: "Containers"
             },
             {
                 correct: "Amazon EKS",
-                description: "Elastic Kubernetes Service",
+                descriptions: {
+                    ja: "Elastic Kubernetes Service",
+                    en: "Elastic Kubernetes Service",
+                    zh: "弹性Kubernetes服务",
+                    ko: "탄력적 Kubernetes 서비스"
+                },
                 category: "Containers"
             },
             {
                 correct: "AWS Fargate",
-                description: "サーバーレスコンテナ",
+                descriptions: {
+                    ja: "サーバーレスコンテナ",
+                    en: "Serverless containers",
+                    zh: "无服务器容器",
+                    ko: "서버리스 컨테이너"
+                },
                 category: "Containers"
             },
             {
                 correct: "Amazon CloudWatch",
-                description: "モニタリングとログ管理",
+                descriptions: {
+                    ja: "モニタリングとログ管理",
+                    en: "Monitoring and log management",
+                    zh: "监控和日志管理",
+                    ko: "모니터링 및 로그 관리"
+                },
                 category: "Management"
             },
             {
                 correct: "AWS CloudTrail",
-                description: "APIコール監査ログ",
+                descriptions: {
+                    ja: "APIコール監査ログ",
+                    en: "API call audit logging",
+                    zh: "API调用审计日志",
+                    ko: "API 호출 감사 로깅"
+                },
                 category: "Security"
             },
             {
                 correct: "Amazon Route 53",
-                description: "DNSウェブサービス",
+                descriptions: {
+                    ja: "DNSウェブサービス",
+                    en: "DNS web service",
+                    zh: "DNS网络服务",
+                    ko: "DNS 웹 서비스"
+                },
                 category: "Networking"
             },
             {
                 correct: "AWS Elastic Beanstalk",
-                description: "アプリケーションデプロイメント",
+                descriptions: {
+                    ja: "アプリケーションデプロイメント",
+                    en: "Application deployment",
+                    zh: "应用程序部署",
+                    ko: "애플리케이션 배포"
+                },
                 category: "Compute"
             },
             {
                 correct: "Amazon ElastiCache",
-                description: "インメモリキャッシュ",
+                descriptions: {
+                    ja: "インメモリキャッシュ",
+                    en: "In-memory cache",
+                    zh: "内存缓存",
+                    ko: "인메모리 캐시"
+                },
                 category: "Database"
             },
             {
                 correct: "Amazon Redshift",
-                description: "データウェアハウス",
+                descriptions: {
+                    ja: "データウェアハウス",
+                    en: "Data warehouse",
+                    zh: "数据仓库",
+                    ko: "데이터 웨어하우스"
+                },
                 category: "Analytics"
             },
             {
                 correct: "AWS Glue",
-                description: "ETLサービス",
+                descriptions: {
+                    ja: "ETLサービス",
+                    en: "ETL service",
+                    zh: "ETL服务",
+                    ko: "ETL 서비스"
+                },
                 category: "Analytics"
             },
             {
                 correct: "Amazon Kinesis",
-                description: "リアルタイムデータストリーミング",
+                descriptions: {
+                    ja: "リアルタイムデータストリーミング",
+                    en: "Real-time data streaming",
+                    zh: "实时数据流",
+                    ko: "실시간 데이터 스트리밍"
+                },
                 category: "Analytics"
             },
             {
                 correct: "AWS Step Functions",
-                description: "サーバーレスワークフロー",
+                descriptions: {
+                    ja: "サーバーレスワークフロー",
+                    en: "Serverless workflow",
+                    zh: "无服务器工作流",
+                    ko: "서버리스 워크플로"
+                },
                 category: "Application Integration"
             },
             {
                 correct: "Amazon API Gateway",
-                description: "APIの作成・管理・デプロイ",
+                descriptions: {
+                    ja: "APIの作成・管理・デプロイ",
+                    en: "API creation, management, and deployment",
+                    zh: "API创建、管理和部署",
+                    ko: "API 생성, 관리 및 배포"
+                },
                 category: "Networking"
             },
             {
                 correct: "AWS Secrets Manager",
-                description: "シークレット管理",
+                descriptions: {
+                    ja: "シークレット管理",
+                    en: "Secrets management",
+                    zh: "密钥管理",
+                    ko: "시크릿 관리"
+                },
                 category: "Security"
             },
             {
                 correct: "AWS Systems Manager",
-                description: "運用データの一元管理",
+                descriptions: {
+                    ja: "運用データの一元管理",
+                    en: "Centralized operational data management",
+                    zh: "集中运营数据管理",
+                    ko: "중앙 집중식 운영 데이터 관리"
+                },
                 category: "Management"
             },
             {
                 correct: "Amazon Cognito",
-                description: "ユーザー認証・認可",
+                descriptions: {
+                    ja: "ユーザー認証・認可",
+                    en: "User authentication and authorization",
+                    zh: "用户身份验证和授权",
+                    ko: "사용자 인증 및 권한 부여"
+                },
                 category: "Security"
             }
         ];
@@ -205,14 +501,67 @@ class AWSGunslingerQuiz {
 
     setupEventListeners() {
         this.startBtn.addEventListener('click', () => this.startGame());
-        this.retryBtn.addEventListener('click', () => this.startGame());
+        this.retryBtn.addEventListener('click', () => this.backToTitle());
         this.reviewBtn.addEventListener('click', () => this.showReview());
         this.backToResultBtn.addEventListener('click', () => this.showResult());
+        
+        // 言語選択イベント
+        this.languageSelect.addEventListener('change', (e) => {
+            this.currentLanguage = e.target.value;
+            this.updateLanguage();
+        });
         
         // ターゲットクリックイベント
         this.targets.forEach((target, index) => {
             target.addEventListener('click', (e) => this.shootTarget(index, e));
         });
+    }
+
+    updateLanguage() {
+        const t = this.translations[this.currentLanguage];
+        
+        // data-i18n属性を持つ要素を更新
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (t[key]) {
+                if (element.innerHTML.includes('<span')) {
+                    // スパン要素を含む場合は特別処理
+                    const spans = element.querySelectorAll('span');
+                    if (key === 'questionCounter') {
+                        element.innerHTML = `${t[key]} <span id="current-question">${spans[0]?.textContent || '1'}</span>/10`;
+                    } else if (key === 'score') {
+                        element.innerHTML = `${t[key]} <span id="current-score">${spans[0]?.textContent || '0'}</span>`;
+                    } else if (key === 'accuracy') {
+                        element.innerHTML = `${t[key]} ${spans[0]?.textContent || '80%'}`;
+                    }
+                } else {
+                    element.innerHTML = t[key];
+                }
+            }
+        });
+        
+        // 要素の参照を更新
+        this.currentQuestionEl = document.getElementById('current-question');
+        this.currentScoreEl = document.getElementById('current-score');
+        
+        // ゲーム中の場合は問題文も更新
+        if (this.gameScreen.classList.contains('active') && this.gameQuestions.length > 0) {
+            const currentGameQuestion = this.gameQuestions[this.currentQuestion];
+            if (currentGameQuestion && currentGameQuestion.service) {
+                this.questionText.textContent = currentGameQuestion.service.descriptions[this.currentLanguage] || currentGameQuestion.service.descriptions.ja;
+            }
+        }
+    }
+
+    backToTitle() {
+        // ゲーム状態をリセット
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.wrongAnswers = [];
+        this.gameQuestions = [];
+        
+        // タイトル画面に戻る
+        this.showScreen('start');
     }
 
     setupCrosshair() {
@@ -405,7 +754,7 @@ class AWSGunslingerQuiz {
         console.log('正解インデックス:', correctIndex);
         
         return {
-            question: service.description,
+            question: service.descriptions[this.currentLanguage] || service.descriptions.ja,
             category: service.category,
             options: shuffledOptions,
             correctIndex: correctIndex,
@@ -461,7 +810,7 @@ class AWSGunslingerQuiz {
         const correctIndex = shuffledOptions.indexOf(correctName);
         
         return {
-            question: service.description,
+            question: service.descriptions[this.currentLanguage] || service.descriptions.ja,
             category: service.category,
             options: shuffledOptions,
             correctIndex: correctIndex,
@@ -571,7 +920,7 @@ class AWSGunslingerQuiz {
             // 正解の場合
             target.classList.add('shot', 'correct');
             this.score++;
-            this.showFeedback('🎯 見事な射撃だ！', 'success');
+            this.showFeedback(this.translations[this.currentLanguage].hitFeedback, 'success');
         } else {
             // 不正解の場合
             target.classList.add('shot', 'wrong');
@@ -602,7 +951,7 @@ class AWSGunslingerQuiz {
                 });
             }
             
-            this.showFeedback('💥 外れだ！正解はこっちだった...', 'error');
+            this.showFeedback(this.translations[this.currentLanguage].missFeedback, 'error');
         }
         
         // 次の問題へ（時間を元に戻す）
@@ -731,10 +1080,11 @@ class AWSGunslingerQuiz {
 
     showResult() {
         const accuracy = Math.round((this.score / this.totalQuestions) * 100);
+        const t = this.translations[this.currentLanguage];
         
         // スコア表示
         this.finalScoreEl.textContent = this.score;
-        this.accuracyEl.textContent = `的中率: ${accuracy}%`;
+        this.accuracyEl.innerHTML = `${t.accuracy} ${accuracy}%`;
         
         // ランク判定
         const rank = this.getRank(accuracy);
@@ -748,39 +1098,42 @@ class AWSGunslingerQuiz {
     }
 
     getRank(accuracy) {
+        const t = this.translations[this.currentLanguage];
+        
         if (accuracy >= 90) {
             return {
-                name: '🤠 伝説のガンスリンガー',
-                comment: '完璧な射撃だ！君は真の西部の英雄だ！'
+                name: t.ranks.legendary,
+                comment: t.rankComments.legendary
             };
         } else if (accuracy >= 80) {
             return {
-                name: '🎯 熟練ガンスリンガー',
-                comment: 'なかなかの腕前だ、相棒！'
+                name: t.ranks.expert,
+                comment: t.rankComments.expert
             };
         } else if (accuracy >= 70) {
             return {
-                name: '🔫 駆け出しガンマン',
-                comment: 'まずまずの腕前だが、まだまだ修行が必要だ。'
+                name: t.ranks.rookie,
+                comment: t.rankComments.rookie
             };
         } else if (accuracy >= 50) {
             return {
-                name: '🤔 見習いカウボーイ',
-                comment: '射撃の練習を続けよう、パートナー。'
+                name: t.ranks.apprentice,
+                comment: t.rankComments.apprentice
             };
         } else {
             return {
-                name: '🐎 馬の世話係',
-                comment: '銃よりも馬の世話の方が向いているかもしれない...'
+                name: t.ranks.stable,
+                comment: t.rankComments.stable
             };
         }
     }
 
     showReview() {
+        const t = this.translations[this.currentLanguage];
         this.wrongAnswersEl.innerHTML = '';
         
         if (this.wrongAnswers.length === 0) {
-            this.wrongAnswersEl.innerHTML = '<p style="color: #DAA520; text-align: center;">完璧な射撃でした！間違いはありません。</p>';
+            this.wrongAnswersEl.innerHTML = `<p style="color: #DAA520; text-align: center;">${t.perfectShot}</p>`;
         } else {
             this.wrongAnswers.forEach((wrong, index) => {
                 const item = document.createElement('div');
@@ -791,10 +1144,10 @@ class AWSGunslingerQuiz {
                     </div>
                     <div class="wrong-details">
                         <div class="correct-answer">
-                            <strong>正解:</strong> ${wrong.correct}
+                            <strong>${t.correctAnswer}</strong> ${wrong.correct}
                         </div>
                         <div class="user-answer">
-                            <strong>あなたの回答:</strong> ${wrong.userAnswer}
+                            <strong>${t.yourAnswer}</strong> ${wrong.userAnswer}
                         </div>
                     </div>
                 `;
@@ -833,5 +1186,7 @@ document.head.appendChild(style);
 
 // ゲーム初期化
 document.addEventListener('DOMContentLoaded', () => {
-    new AWSGunslingerQuiz();
+    const quiz = new AWSGunslingerQuiz();
+    // 初期言語設定
+    quiz.updateLanguage();
 });

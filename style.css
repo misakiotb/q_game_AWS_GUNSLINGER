@@ -231,7 +231,48 @@ body {
     padding: 0 20px;
 }
 
-/* 人物アイコンと的の丸を削除 */
+/* 言語選択 */
+.language-selector {
+    margin: 20px 0 30px 0;
+    text-align: center;
+}
+
+.language-selector label {
+    display: block;
+    color: #F4A460;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.language-dropdown {
+    font-family: 'Rye', cursive;
+    font-size: 1rem;
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    color: #DAA520;
+    border: 2px solid #DAA520;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    min-width: 200px;
+}
+
+.language-dropdown:hover {
+    background: linear-gradient(45deg, #A0522D, #CD853F);
+}
+
+.language-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(218,165,32,0.5);
+}
+
+.language-dropdown option {
+    background: #8B4513;
+    color: #DAA520;
+    padding: 5px;
+}
 
 .target-text {
     color: #2F1B14;

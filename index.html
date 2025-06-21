@@ -14,12 +14,24 @@
             <div id="start-screen" class="screen active">
                 <div class="title-container">
                     <h1 class="main-title">🤠 AWS GUNSLINGER</h1>
-                    <h2 class="sub-title">Service Name Showdown</h2>
-                    <p class="description">
+                    <h2 class="sub-title" data-i18n="subtitle">Service Name Showdown</h2>
+                    <p class="description" data-i18n="description">
                         西部の荒野で繰り広げられるAWSサービス名の決闘！<br>
                         正しいサービス名を撃ち抜け、ガンスリンガー！
                     </p>
-                    <button id="start-btn" class="cowboy-btn">🔫 決闘開始！</button>
+                    
+                    <!-- 言語選択 -->
+                    <div class="language-selector">
+                        <label data-i18n="selectLanguage">言語を選択:</label>
+                        <select id="language-select" class="language-dropdown">
+                            <option value="ja">🇯🇵 日本語</option>
+                            <option value="en">🇺🇸 English</option>
+                            <option value="zh">🇨🇳 中文</option>
+                            <option value="ko">🇰🇷 한국어</option>
+                        </select>
+                    </div>
+                    
+                    <button id="start-btn" class="cowboy-btn" data-i18n="startButton">🔫 決闘開始！</button>
                 </div>
             </div>
 
@@ -27,8 +39,8 @@
             <div id="game-screen" class="screen">
                 <div class="game-header">
                     <div class="score-info">
-                        <span class="question-counter">問題 <span id="current-question">1</span>/10</span>
-                        <span class="score">的中: <span id="current-score">0</span></span>
+                        <span class="question-counter" data-i18n="questionCounter">問題 <span id="current-question">1</span>/10</span>
+                        <span class="score" data-i18n="score">的中: <span id="current-score">0</span></span>
                     </div>
                 </div>
 
@@ -77,22 +89,22 @@
             <div id="result-screen" class="screen">
                 <div class="result-container">
                     <div class="sheriff-badge">⭐</div>
-                    <h2 class="result-title">決闘終了！</h2>
+                    <h2 class="result-title" data-i18n="gameOver">決闘終了！</h2>
                     <div class="final-score">
                         <div class="score-display">
                             <span class="score-number" id="final-score">8</span>
                             <span class="score-total">/10</span>
                         </div>
-                        <div class="accuracy" id="accuracy">的中率: 80%</div>
+                        <div class="accuracy" id="accuracy" data-i18n="accuracy">的中率: 80%</div>
                     </div>
                     <div class="rank-display" id="rank-display">
-                        <div class="rank-title">あなたの称号</div>
+                        <div class="rank-title" data-i18n="yourTitle">あなたの称号</div>
                         <div class="rank-name" id="rank-name">🤠 熟練ガンスリンガー</div>
                         <div class="rank-comment" id="rank-comment">なかなかの腕前だ、相棒！</div>
                     </div>
                     <div class="action-buttons">
-                        <button id="retry-btn" class="cowboy-btn">🔄 もう一勝負</button>
-                        <button id="review-btn" class="cowboy-btn secondary">📝 間違いを確認</button>
+                        <button id="retry-btn" class="cowboy-btn" data-i18n="backToTitle">🏠 タイトル画面へ</button>
+                        <button id="review-btn" class="cowboy-btn secondary" data-i18n="reviewMistakes">📝 間違いを確認</button>
                     </div>
                 </div>
             </div>
@@ -100,11 +112,11 @@
             <!-- 復習画面 -->
             <div id="review-screen" class="screen">
                 <div class="review-container">
-                    <h2 class="review-title">🎯 撃ち損じた標的</h2>
+                    <h2 class="review-title" data-i18n="missedTargets">🎯 撃ち損じた標的</h2>
                     <div id="wrong-answers" class="wrong-answers">
                         <!-- 間違えた問題がここに表示される -->
                     </div>
-                    <button id="back-to-result-btn" class="cowboy-btn">🔙 結果に戻る</button>
+                    <button id="back-to-result-btn" class="cowboy-btn" data-i18n="backToResult">🔙 結果に戻る</button>
                 </div>
             </div>
         </div>
